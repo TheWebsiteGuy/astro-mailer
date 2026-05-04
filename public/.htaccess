@@ -1,0 +1,13 @@
+# Block access to .mail.env files
+<Files .mail.env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+
+# Block access to any file starting with a dot (optional but recommended)
+RewriteEngine On
+RewriteRule ^\.(.*) - [F,L]
+
+# Disable directory browsing
+Options -Indexes

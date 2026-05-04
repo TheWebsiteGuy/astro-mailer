@@ -1,0 +1,393 @@
+---
+/**
+ * Contact Component
+ * A premium, glassmorphic contact form for Astro.
+ */
+---
+
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="contact-header">
+            <span class="badge">Get in Touch</span>
+            <h1>
+                Let's Start a <span class="gradient-text">Conversation</span>
+            </h1>
+            <p>
+                Fill out the form below and we'll get back to you within 24
+                hours.
+            </p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="icon">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                            ></path><polyline points="22,6 12,13 2,6"
+                            ></polyline></svg
+                        >
+                    </div>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>support@thewebsiteguy.uk</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="icon">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><circle cx="12" cy="12" r="10"></circle><path
+                                d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
+                            ></path><line x1="12" y1="17" x2="12" y2="17"
+                            ></line></svg
+                        >
+                    </div>
+                    <div>
+                        <h3>Get Support</h3>
+                        <a
+                            href="https://thewebsiteguy.uk/support"
+                            target="_blank">thewebsiteguy.uk</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <form
+                    id="contactForm"
+                    action="/api/send.php"
+                    method="POST"
+                    class="contact-form"
+                >
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="John Doe"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="john@example.com"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            placeholder="Project Inquiry"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            placeholder="How can we help you?"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span>Send Message</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><line x1="22" y1="2" x2="11" y2="13"
+                            ></line><polygon points="22 2 15 22 11 13 2 9 22 2"
+                            ></polygon></svg
+                        >
+                    </button>
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    :root {
+        --primary: #6366f1;
+        --primary-hover: #4f46e5;
+        --bg-dark: #0f172a;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.1);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .contact-section {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        padding: 8rem 2rem;
+        min-height: 100vh;
+        font-family: "Inter", system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .badge {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+        padding: 0.5rem 1rem;
+        border-radius: 99px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        display: inline-block;
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .contact-header p {
+        color: var(--text-muted);
+        font-size: 1.25rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 4rem;
+        align-items: start;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .info-card {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        backdrop-filter: blur(12px);
+        transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .info-card .icon {
+        width: 3rem;
+        height: 3rem;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+    }
+
+    .info-card h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .info-card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .contact-form-container {
+        background: var(--card-bg);
+        padding: 3rem;
+        border-radius: 2rem;
+        border: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--glass-shadow);
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-muted);
+    }
+
+    input,
+    textarea {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--border);
+        padding: 0.875rem 1rem;
+        border-radius: 0.75rem;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    .submit-btn {
+        background: var(--primary);
+        color: white;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.5);
+    }
+
+    .form-status {
+        text-align: center;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        min-height: 1.25rem;
+    }
+
+    .form-status.success {
+        color: #10b981;
+    }
+    .form-status.error {
+        color: #ef4444;
+    }
+
+    @media (max-width: 968px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<script>
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    const status = document.getElementById("formStatus");
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!status) return;
+
+        status.textContent = "Sending...";
+        status.className = "form-status";
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                status.textContent =
+                    result.message || "Message sent successfully!";
+                status.classList.add("success");
+                form.reset();
+            } else {
+                status.textContent = result.message || "Something went wrong.";
+                status.classList.add("error");
+            }
+        } catch (error) {
+            status.textContent = "Could not connect to the server.";
+            status.classList.add("error");
+        }
+    });
+</script>

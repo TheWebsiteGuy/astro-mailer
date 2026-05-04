@@ -8,7 +8,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "copy .mail.env dist\\api\\.mail.env",
+
     "preview": "astro preview",
+
     "astro": "astro"
   },
   "dependencies": {
