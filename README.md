@@ -8,9 +8,8 @@ This project demonstrates how to integrate a modern Astro frontend with a tradit
 
 ### Key Features
 - **📧 PHPMailer Integration**: Uses the industry-standard PHPMailer library for reliable SMTP email delivery.
-- **🛡️ Secure Config Handling**: A custom, zero-dependency PHP loader that handles the `.mail.env` configuration.
-- **📦 No-Composer Setup**: Manually managed PHPMailer files to keep your `vendor/` folder clean.
 - **🔒 Automated Security**: Includes an `.htaccess` firewall to block public access to the `.mail.env` file.
+- **✨ Dynamic HTML Templates**: Responsive, professional email design with easy-to-use placeholders.
 - **⚡ AJAX Submissions**: Form submissions are handled via the Fetch API for a seamless user experience.
 
 ---
@@ -70,6 +69,31 @@ npm run build
 1. Astro builds your static site into the `dist/` folder.
 2. A **postbuild** script automatically copies your `.mail.env` file into `dist/api/.mail.env`.
 3. The included `.htaccess` file ensures that this file remains private and inaccessible to browsers.
+
+---
+
+## ✨ Email Customization
+
+The system uses a separate HTML template for outgoing emails, allowing you to customize the design without touching the PHP logic.
+
+### Template Location
+The template is located at `public/api/email_template.html`.
+
+### Available Placeholders
+You can use the following placeholders in your HTML template:
+
+| Placeholder | Description |
+| :--- | :--- |
+| `{{name}}` | The name of the sender |
+| `{{email}}` | The sender's email address |
+| `{{subject}}` | The subject of the message |
+| `{{message}}` | The message content (handles line breaks) |
+
+### Design Features
+The default template features a modern, premium design:
+- **Responsive Layout**: Works beautifully on desktops and mobile devices.
+- **Clean Aesthetics**: Gradient headers and structured data fields.
+- **Safe Handling**: Automatically escapes HTML and preserves line breaks in messages.
 
 ---
 
