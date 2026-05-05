@@ -13,6 +13,7 @@ This project provides a professional way to add a contact form to an Astro websi
 - **✨ Dynamic HTML Templates**: Responsive, professional email design with easy-to-use placeholders.
 - **⚡ AJAX Submissions**: Form submissions are handled via the Fetch API for a seamless user experience.
 - **🍯 Anti-Spam Honeypot**: Built-in hidden field trap to automatically block bot submissions without annoying captchas.
+- **🤖 Google ReCAPTCHA v3**: Integrated invisible CAPTCHA verification to block bots without annoying users.
 
 ---
 
@@ -62,13 +63,23 @@ MAIL_FROM_ADDRESS=your-email@example.com
 MAIL_FROM_NAME="Website Contact"
 MAIL_TO_ADDRESS=admin@your-domain.com
 MAIL_TO_NAME="Admin"
+
+# ReCAPTCHA Configuration
+RECAPTCHA_SITE_KEY=your-recaptcha-site-key
+RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 ```
 
-### 2. PHPMailer Files
+### 2. Google ReCAPTCHA Settings
+The form uses Google ReCAPTCHA v3 (invisible) to prevent spam without interrupting the user.
+1. Get your Site Key and Secret Key from the [Google ReCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/create) (ensure you create a **v3** property).
+2. Add both your **Site Key** and **Secret Key** to the `.mail.env` file (as shown above).
+*(The component will fall back to test keys if you haven't set these up yet).*
+
+### 3. PHPMailer Files
 This project uses a manual installation. The following files are required in `public/api/PHPMailer/`:
 - `Exception.php`, `PHPMailer.php`, and `SMTP.php`.
 
-### 3. Build & Deployment
+### 4. Build & Deployment
 When you run the build command, the project automatically prepares your PHP environment:
 
 ```bash

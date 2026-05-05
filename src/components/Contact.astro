@@ -1,8 +1,24 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+
 /**
  * Contact Component
  * A premium, glassmorphic contact form for Astro.
  */
+let recaptchaSiteKey = "6LcII10sAAAAANyn2S32IaW5kUF6nc8mXA8Ef7bs"; // Default test key
+try {
+    const envPath = path.resolve(process.cwd(), '.mail.env');
+    if (fs.existsSync(envPath)) {
+        const envContent = fs.readFileSync(envPath, 'utf-8');
+        const match = envContent.match(/^RECAPTCHA_SITE_KEY=(.*)$/m);
+        if (match && match[1]) {
+            recaptchaSiteKey = match[1].trim();
+        }
+    }
+} catch (e) {
+    console.error("Could not load RECAPTCHA_SITE_KEY from .mail.env");
+}
 ---
 
 <section id="contact" class="contact-section">
@@ -25,9 +41,16 @@
                     action="/api/send.php"
                     method="POST"
                     class="contact-form"
+                    data-sitekey={recaptchaSiteKey}
                 >
                     <!-- Honeypot Field (Anti-Spam) -->
-                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+                    <input
+                        type="text"
+                        name="_honey"
+                        style="display:none"
+                        tabindex="-1"
+                        autocomplete="off"
+                    />
 
                     <div class="form-group">
                         <label for="name">Full Name</label>
@@ -68,6 +91,9 @@
                             placeholder="How can we help you?"
                             required></textarea>
                     </div>
+
+                    <!-- reCAPTCHA v3 will run invisibly on submit -->
+
                     <button type="submit" class="submit-btn">
                         <span>Send Message</span>
                         <svg
@@ -266,6 +292,18 @@
         const formData = new FormData(form);
 
         try {
+            const siteKey = form.dataset.sitekey;
+            // Generate reCAPTCHA v3 token
+            const token = await new Promise((resolve) => {
+                (window as any).grecaptcha.ready(() => {
+                    (window as any).grecaptcha
+                        .execute(siteKey, { action: "submit" })
+                        .then((t: string) => resolve(t));
+                });
+            });
+
+            formData.append("g-recaptcha-response", token as string);
+
             const response = await fetch(form.action, {
                 method: "POST",
                 body: formData,
@@ -288,3 +326,6 @@
         }
     });
 </script>
+
+<!-- Load reCAPTCHA v3 API -->
+<script is:inline src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`} async defer></script>

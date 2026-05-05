@@ -46,6 +46,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // ReCAPTCHA Verification
+    $recaptcha_secret = $_ENV['RECAPTCHA_SECRET_KEY'] ?? '';
+    if (!empty($recaptcha_secret)) {
+        $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
+        if (empty($recaptcha_response)) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => "Please complete the CAPTCHA."]);
+            exit;
+        }
+
+        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $verify_url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+            'secret' => $recaptcha_secret,
+            'response' => $recaptcha_response,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+        ]));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $verify_result = curl_exec($ch);
+
+        $captcha_success = json_decode($verify_result);
+
+        if (empty($captcha_success) || !$captcha_success->success || !isset($captcha_success->score) || $captcha_success->score < 0.5) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => "CAPTCHA validation failed (Score: " . ($captcha_success->score ?? 'N/A') . "). Please try again."]);
+            exit;
+        }
+    }
+
     // Sanitize input
     $name = strip_tags(trim($_POST["name"] ?? ''));
     $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
