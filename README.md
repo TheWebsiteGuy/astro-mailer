@@ -9,7 +9,7 @@ This project provides a professional way to add a contact form to an Astro websi
 ### Key Features
 - **🚫 No 3rd-Party Services**: Send emails directly from your own server—no registration or subscriptions required.
 - **📧 PHPMailer Core**: Uses the industry-standard [PHPMailer](https://github.com/PHPMailer/PHPMailer) library (manual inclusion) for reliable SMTP delivery.
-- **🔒 Automated Security**: Includes an `.htaccess` firewall to block public access to the `.mail.env` file.
+- **🔒 Optional Security**: Includes an `.htaccess.example` firewall config just in case your server doesn't block hidden files by default.
 - **✨ Dynamic HTML Templates**: Responsive, professional email design with easy-to-use placeholders.
 - **⚡ AJAX Submissions**: Form submissions are handled via the Fetch API for a seamless user experience.
 - **🍯 Anti-Spam Honeypot**: Built-in hidden field trap to automatically block bot submissions without annoying captchas.
@@ -22,7 +22,7 @@ This project provides a professional way to add a contact form to an Astro websi
 ```text
 ├── .mail.env                  # SMTP Credentials (Private)
 ├── public/
-│   ├── .htaccess              # Security firewall (Blocks access to .mail.env)
+│   ├── .htaccess.example      # Example security firewall config (Blocks access to .mail.env)
 │   └── api/
 │       ├── send.php           # PHP processing script
 │       ├── email_template.html # HTML Email Template
@@ -89,7 +89,7 @@ npm run build
 **What happens during build?**
 1. Astro builds your static site into the `dist/` folder.
 2. A **postbuild** script automatically copies your `.mail.env` file into `dist/api/.mail.env`.
-3. The included `.htaccess` file ensures that this file remains private and inaccessible to browsers.
+3. The included `.htaccess.example` file can be renamed to `.htaccess` to ensure the `.mail.env` file remains private, just in case your web server does not block hidden files automatically.
 
 ---
 
