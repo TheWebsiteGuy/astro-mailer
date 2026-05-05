@@ -81,6 +81,21 @@ npm run build
 
 ---
 
+## 📡 Form API Integration
+
+The `Contact.astro` component handles form submissions by sending data to the PHP backend via an asynchronous Fetch API request.
+
+### How it Works:
+1. **Event Listener**: The form intercepts the default `submit` event using a client-side `<script>` tag within the component.
+2. **Data Collection**: It uses `FormData` to collect all the input values (`name`, `email`, `subject`, `message`).
+3. **Fetch API**: It sends a `POST` request to `/api/send.php` (defined in the form's `action` attribute) with the form data.
+4. **JSON Response**: The PHP script processes the email and returns a JSON response indicating success or failure.
+5. **UI Update**: The component dynamically updates the UI to show a success message or an error message based on the JSON response, without reloading the page.
+
+If JavaScript is disabled, the form will fall back to a standard `POST` request directly to the PHP script.
+
+---
+
 ## ✨ Email Customization
 
 The system uses a separate HTML template for outgoing emails, allowing you to customize the design without touching the PHP logic.
@@ -103,6 +118,32 @@ The default template features a modern, premium design:
 - **Responsive Layout**: Works beautifully on desktops and mobile devices.
 - **Clean Aesthetics**: Gradient headers and structured data fields.
 - **Safe Handling**: Automatically escapes HTML and preserves line breaks in messages.
+
+### ➕ Adding Custom Fields
+To add new fields (like a "Phone Number" or "Company" field), follow these 3 steps:
+
+1. **Update the Frontend Component (`src/components/Contact.astro`)**
+   Add your new HTML input. Ensure it has a unique `name` attribute:
+   ```html
+   <input type="tel" id="phone" name="phone" placeholder="Phone Number" />
+   ```
+
+2. **Update the PHP Processor (`public/api/send.php`)**
+   Capture the new field from the `$_POST` array and add it to the placeholder replacements:
+   ```php
+   // Capture the field (Around line 45)
+   $phone = strip_tags(trim($_POST["phone"] ?? ''));
+   
+   // Add to replacements (Around line 82)
+   $email_body = str_replace(
+       ['{{name}}', '{{email}}', '{{subject}}', '{{message}}', '{{phone}}'],
+       [$name, $email, $subject_input, nl2br(htmlspecialchars($message_content)), $phone],
+       $template
+   );
+   ```
+
+3. **Update the HTML Template (`public/api/email_template.html`)**
+   Add your new placeholder `{{phone}}` anywhere in the email template.
 
 ---
 
