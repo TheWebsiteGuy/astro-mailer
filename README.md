@@ -30,7 +30,8 @@ This project provides a professional way to add a contact form to an Astro websi
 
 ├── src/
 │   ├── components/
-│   │   └── Contact.astro      # The Contact Form component
+│   │   ├── Contact.astro      # The Contact Form component
+│   │   └── Recaptcha.astro    # Google ReCAPTCHA v3 component
 │   └── pages/
 │       └── index.astro        # Main landing page
 └── package.json               # Includes automated 'postbuild' script

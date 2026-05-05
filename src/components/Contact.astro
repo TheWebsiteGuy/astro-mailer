@@ -1,6 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import Recaptcha from './Recaptcha.astro';
 
 /**
  * Contact Component
@@ -41,7 +42,6 @@ try {
                     action="/api/send.php"
                     method="POST"
                     class="contact-form"
-                    data-sitekey={recaptchaSiteKey}
                 >
                     <!-- Honeypot Field (Anti-Spam) -->
                     <input
@@ -292,18 +292,6 @@ try {
         const formData = new FormData(form);
 
         try {
-            const siteKey = form.dataset.sitekey;
-            // Generate reCAPTCHA v3 token
-            const token = await new Promise((resolve) => {
-                (window as any).grecaptcha.ready(() => {
-                    (window as any).grecaptcha
-                        .execute(siteKey, { action: "submit" })
-                        .then((t: string) => resolve(t));
-                });
-            });
-
-            formData.append("g-recaptcha-response", token as string);
-
             const response = await fetch(form.action, {
                 method: "POST",
                 body: formData,
@@ -327,5 +315,5 @@ try {
     });
 </script>
 
-<!-- Load reCAPTCHA v3 API -->
-<script is:inline src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`} async defer></script>
+<!-- ReCAPTCHA v3 — loads the API and injects the token before each submit -->
+<Recaptcha siteKey={recaptchaSiteKey} formId="contactForm" />

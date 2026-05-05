@@ -1,0 +1,78 @@
+---
+/**
+ * Recaptcha Component
+ * Handles Google ReCAPTCHA v3 (invisible) token generation.
+ *
+ * Usage:
+ *   <Recaptcha siteKey={recaptchaSiteKey} formId="contactForm" />
+ *
+ * The component will:
+ *  - Load the reCAPTCHA v3 API script from Google.
+ *  - Intercept the target form's submit event and inject a
+ *    `g-recaptcha-response` hidden field before the request is sent.
+ *
+ * Props:
+ *  - siteKey  {string}  Your reCAPTCHA v3 Site Key (required)
+ *  - formId   {string}  The `id` of the form to protect (default: "contactForm")
+ */
+interface Props {
+    siteKey: string;
+    formId?: string;
+}
+
+const { siteKey, formId = "contactForm" } = Astro.props;
+---
+
+<!-- Load reCAPTCHA v3 API -->
+<script
+    is:inline
+    src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+    async
+    defer
+></script>
+
+<!-- Inject token on form submit -->
+<script define:vars={{ siteKey, formId }}>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        form.addEventListener(
+            "submit",
+            async (e) => {
+                // Only intercept if grecaptcha is available
+                if (typeof grecaptcha === "undefined") return;
+
+                e.stopImmediatePropagation();
+                e.preventDefault();
+
+                try {
+                    await new Promise((resolve) => grecaptcha.ready(resolve));
+                    const token = await grecaptcha.execute(siteKey, {
+                        action: "submit",
+                    });
+
+                    // Inject token into form data so the existing submit
+                    // handler (or native POST fallback) picks it up
+                    let hiddenInput = form.querySelector(
+                        'input[name="g-recaptcha-response"]'
+                    );
+                    if (!hiddenInput) {
+                        hiddenInput = document.createElement("input");
+                        hiddenInput.type = "hidden";
+                        hiddenInput.name = "g-recaptcha-response";
+                        form.appendChild(hiddenInput);
+                    }
+                    hiddenInput.value = token;
+                } catch (err) {
+                    console.warn("reCAPTCHA token generation failed:", err);
+                }
+
+                // Re-dispatch so the Contact component's submit handler fires
+                form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+            },
+            // Capture phase so this runs BEFORE the Contact submit handler
+            true
+        );
+    });
+</script>
