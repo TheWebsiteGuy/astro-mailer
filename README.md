@@ -12,6 +12,7 @@ This project provides a professional way to add a contact form to an Astro websi
 - **🔒 Automated Security**: Includes an `.htaccess` firewall to block public access to the `.mail.env` file.
 - **✨ Dynamic HTML Templates**: Responsive, professional email design with easy-to-use placeholders.
 - **⚡ AJAX Submissions**: Form submissions are handled via the Fetch API for a seamless user experience.
+- **🍯 Anti-Spam Honeypot**: Built-in hidden field trap to automatically block bot submissions without annoying captchas.
 
 ---
 
