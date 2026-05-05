@@ -1,13 +1,14 @@
 # Astro + PHPMailer Contact Form
 
-A premium, lightweight, and zero-dependency solution for adding a contact form to an Astro website using a PHP backend.
+A professional and simple solution for adding a contact form to an Astro website using a PHP backend.
 
 ## 🚀 Overview
 
-This project demonstrates how to integrate a modern Astro frontend with a traditional PHP mailing backend. It is designed for developers who want a "lean" setup without the overhead of Composer or large JavaScript-based mailing libraries.
+This project provides a professional way to add a contact form to an Astro website **without relying on 3rd-party services** (like Formspree, SendGrid, or Netlify Forms). By using your existing PHP-capable hosting, you keep full control over your data and avoid monthly subscriptions or third-party branding.
 
 ### Key Features
-- **📧 PHPMailer Integration**: Uses the industry-standard PHPMailer library for reliable SMTP email delivery.
+- **🚫 No 3rd-Party Services**: Send emails directly from your own server—no registration or subscriptions required.
+- **📧 PHPMailer Core**: Uses the industry-standard [PHPMailer](https://github.com/PHPMailer/PHPMailer) library (manual inclusion) for reliable SMTP delivery.
 - **🔒 Automated Security**: Includes an `.htaccess` firewall to block public access to the `.mail.env` file.
 - **✨ Dynamic HTML Templates**: Responsive, professional email design with easy-to-use placeholders.
 - **⚡ AJAX Submissions**: Form submissions are handled via the Fetch API for a seamless user experience.
@@ -32,6 +33,14 @@ This project demonstrates how to integrate a modern Astro frontend with a tradit
 │       └── index.astro        # Main landing page
 └── package.json               # Includes automated 'postbuild' script
 ```
+
+---
+
+## 📋 Requirements
+
+To use this solution, your hosting environment must provide:
+1. **PHP 7.4+**: The server-side environment to process the form.
+2. **PHPMailer Files**: The core library files (`Exception.php`, `PHPMailer.php`, `SMTP.php`) from [PHPMailer/PHPMailer](https://github.com/PHPMailer/PHPMailer) must be placed in `public/api/PHPMailer/`.
 
 ---
 

@@ -19,58 +19,6 @@
         </div>
 
         <div class="contact-grid">
-            <div class="contact-info">
-                <div class="info-card">
-                    <div class="icon">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            ><path
-                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                            ></path><polyline points="22,6 12,13 2,6"
-                            ></polyline></svg
-                        >
-                    </div>
-                    <div>
-                        <h3>Email Us</h3>
-                        <p>support@thewebsiteguy.uk</p>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="icon">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            ><circle cx="12" cy="12" r="10"></circle><path
-                                d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
-                            ></path><line x1="12" y1="17" x2="12" y2="17"
-                            ></line></svg
-                        >
-                    </div>
-                    <div>
-                        <h3>Get Support</h3>
-                        <a
-                            href="https://thewebsiteguy.uk/support"
-                            target="_blank">thewebsiteguy.uk</a
-                        >
-                    </div>
-                </div>
-            </div>
-
             <div class="contact-form-container">
                 <form
                     id="contactForm"
@@ -209,57 +157,8 @@
     }
 
     .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.5fr;
-        gap: 4rem;
-        align-items: start;
-    }
-
-    .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    .info-card {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 1.5rem;
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: 1rem;
-        backdrop-filter: blur(12px);
-        transition:
-            transform 0.3s ease,
-            border-color 0.3s ease;
-    }
-
-    .info-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(99, 102, 241, 0.4);
-    }
-
-    .info-card .icon {
-        width: 3rem;
-        height: 3rem;
-        background: rgba(99, 102, 241, 0.1);
-        border-radius: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-    }
-
-    .info-card h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-    }
-
-    .info-card p {
-        color: var(--text-muted);
-        font-size: 0.95rem;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
     .contact-form-container {
@@ -344,11 +243,6 @@
     }
 
     @media (max-width: 968px) {
-        .contact-grid {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
         h1 {
             font-size: 2.5rem;
         }
